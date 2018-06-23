@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ProgressBar pb = null;
     private static final String TAG = "debug_custom";
     private Boolean flag = false;
-
+    public final static String FIRST_DISTANCE = "firstPosition";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -173,12 +173,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Toast.makeText(this, " Ok First Position", Toast.LENGTH_SHORT).show();
 
                     Intent intent2 = new Intent(this, StepCounter.class);
-                    intent2.putExtra("firstPosition", this.firstPositionNumb);
+                    intent2.putExtra(FIRST_DISTANCE, this.firstPositionNumb);
                     startActivity(intent2);
                 }
                 else
                 {
-                    Toast.makeText(this, "Veuillez cliquer de nouveau !", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Problem GPS! click again!", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.secondPosition:
@@ -299,12 +299,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             if (this.extras != null)
             {
-                firstPositionNumb = this.extras.getDoubleArray("firstPosition");
-                if(secondPositionNumb[0] != 0.0)
+                firstPositionNumb = this.extras.getDoubleArray(MainActivity.FIRST_DISTANCE);
+                if(secondPositionNumb[0] != 0 && firstPositionNumb != null)
                 {
 
-                    float distance_step = getIntent().getFloatExtra("distanceStep",0);
-                    int stepNumber = getIntent().getIntExtra("stepNumber",0);
+                    double distance_step = getIntent().getDoubleExtra(StepCounter.DISTANCE_PAS,0);
+                    int stepNumber = getIntent().getIntExtra(StepCounter.NOMBRE_PAS,0);
 
                     Location first = new Location("");
                     Location second = new Location("");
@@ -313,7 +313,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     second.setLatitude(secondPositionNumb[0]);
                     second.setLongitude(secondPositionNumb[1]);
                     int distance_gps = (int) first.distanceTo(second);
-                    String ch = "Distance GPS = "+ distance_gps + "\nDistance PAS = "+ distance_step+ "\nNumbre PAS = "+ stepNumber;
+                    String ch = "Distance GPS = "+ distance_gps + " m\nDistance PAS = "+ distance_step+ " m\nNombre PAS = "+ stepNumber;
                     distance.setText(ch);
                 }
             }

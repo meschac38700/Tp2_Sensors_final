@@ -20,13 +20,16 @@ public class StepCounter extends Activity implements SensorEventListener, View.O
     private Sensor mSensor;
     int t;
     private double distance = 0;
-    private long step = 0;
+    private int step = 0;
     private int oldStepCounter= 0;
     private double oldDistance= 0;
     private boolean isSensorPresent = false;
     private TextView mStepsSinceReboot;
     private Button startGPS;
     private double[] firstPosition = null;
+
+    public final static String DISTANCE_PAS = "distancePAS", NOMBRE_PAS = "nombrePas";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +58,7 @@ public class StepCounter extends Activity implements SensorEventListener, View.O
         Bundle extra = getIntent().getExtras();
         if( extra != null)
         {
-            this.firstPosition = extra.getDoubleArray("firstPosition");
+            this.firstPosition = extra.getDoubleArray(MainActivity.FIRST_DISTANCE);
         }
     }
     /*//function to determine the distance run in kilometers using average step length for men and number of steps
@@ -124,9 +127,9 @@ public class StepCounter extends Activity implements SensorEventListener, View.O
                 Toast.makeText(this, "T = "+ t, Toast.LENGTH_SHORT).show();
                 t++;
             }
-            this.step = (long)(event.values[0]- this.oldStepCounter);
-            this.distance = this. getDistanceStep(0) - oldDistance ;
-            String tmp_ch = String.format("Numbre Pas : %s\nKm parcourus : %s",String.valueOf(step) ,String.valueOf( (distance ))  );
+            this.step = (int)(event.values[0]- this.oldStepCounter);
+            this.distance = this. getDistanceStep(0);
+            String tmp_ch = String.format("Numbre Pas : %s\nKm parcourus : %s",String.valueOf(this.step) ,String.valueOf( (this.distance ))  );
             mStepsSinceReboot.setText( tmp_ch);
         }
     }
@@ -142,9 +145,9 @@ public class StepCounter extends Activity implements SensorEventListener, View.O
         {
             case R.id.gpsStart:
                 Intent intent = new Intent(this, MainActivity.class);
-                intent.putExtra("firstPosition",this.firstPosition );
-                intent.putExtra("distanceStep", this.distance);
-                intent.putExtra("stepNumber", this.step);
+                intent.putExtra(MainActivity.FIRST_DISTANCE,this.firstPosition );
+                intent.putExtra(DISTANCE_PAS, this.distance);
+                intent.putExtra(NOMBRE_PAS, this.step);
                 startActivity(intent);
                 break;
         }
