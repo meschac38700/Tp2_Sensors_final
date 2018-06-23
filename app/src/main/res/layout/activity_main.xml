@@ -74,7 +74,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="restart GPS"
+            android:text="Affiche distance GPS Seulement"
             android:layout_gravity="center"
             android:id="@+id/secondPosition"
             android:background="@android:color/holo_green_dark"

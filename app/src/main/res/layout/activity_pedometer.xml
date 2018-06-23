@@ -11,12 +11,19 @@
         android:layout_centerVertical="true"
         android:text="stepssincereboot"
         android:id="@+id/stepssincereboot"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="click on this button to compare GPS distance to Step distance"
+        android:textAlignment="center"
+        android:layout_marginTop="12dp"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="startGPS"
+        android:text="restart GPS"
+        android:background="@android:color/holo_blue_dark"
         android:id="@+id/gpsStart"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="80dp"/>
 </RelativeLayout>
